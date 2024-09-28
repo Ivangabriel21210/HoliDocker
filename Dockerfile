@@ -33,4 +33,4 @@ RUN wget -P /usr/local/bin/ https://raw.githubusercontent.com/Ivangabriel21210/H
 EXPOSE 8080 2375
 
 # Arranca el Docker daemon en segundo plano y ejecuta Gotty
-CMD ["sh", "-c", "dockerd & gotty -w --port 8080 /bin/bash"]
+CMD ["sh", "-c", "dockerd --storage-driver=vfs & sleep 5 && gotty -w --port 8080 /bin/bash"]
