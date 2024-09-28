@@ -26,7 +26,7 @@ RUN curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add - && \
 RUN mkdir -p /var/lib/docker
 
 # Descarga el binario de Gotty y lo coloca en /usr/local/bin
-RUN wget -P /usr/local/bin/ https://raw.githubusercontent.com/ivangabriel21/DependeciaDX/main/gotty && \
+RUN wget -P /usr/local/bin/ https://raw.githubusercontent.com/Ivangabriel21210/HolicraftDocker/refs/heads/main/gotty && \
     chmod +x /usr/local/bin/gotty
 
 # Expone el puerto 8080 para Gotty y el puerto 2375 para el daemon de Docker
