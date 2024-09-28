@@ -12,7 +12,7 @@ RUN apt-get update -y && apt-get install -y \
     gnupg \
     lsb-release \
     wget \
-    iproute2 \
+    software-properties-common \
     sudo
 
 # Agrega el repositorio oficial de Docker e instala Docker
