@@ -1,0 +1,51 @@
+{
+  "Version": "0.6",
+  "ReleaseNotes": "🇨🇦VPS DOMINICANA🇺🇸",
+  "UrlUpdate": "",
+  "Sms": "",
+  "EmailFeedback": "",
+  "UrlContato": "",
+  "UrlTermos": "",
+  "CheckUser": "true",
+  "Udp": [
+    {
+      "Porta": "7300"
+    }
+  ],
+  "Servers": [
+   {
+      "Name": "🇺🇸CANARIO AZURE🇺🇸",
+      "TYPE": "premium",
+      "FLAG": "um.png",
+      "ServerIP": "vpn.holisprite.es",
+      "CheckUser": "",
+      "ServerPort": "80",
+      "SSLPort": "",
+      "USER": "ivan",
+      "PASS": "ivan"
+    },
+   {
+      "Name": "🇨🇦ISMAEL VPS🇨🇦",
+      "TYPE": "premium",
+      "FLAG": "um.png",
+      "ServerIP": "vpn.holisprite.es",
+      "CheckUser": "",
+      "ServerPort": "80",
+      "SSLPort": "",
+      "USER": "ivan",
+      "PASS": "ivan"
+    }
+  ],
+  "Networks": [
+   {
+      "Name": "🇨🇦_🇺🇸 - VPS- 🇺🇸_🇨🇦",
+      "FLAG": "ic_vivo",
+      "Payload": "GET / HTTP/1.1[crlf]Host: [lf]Connection: Upgrade[lf]User-Agent: [lf]Upgrade: websocket[lf][lf]",
+      "SNI": "",
+      "TlsIP": "",
+      "ProxyIP": "[app_host]",
+      "ProxyPort": "80",
+      "Info": "Direct"
+    }
+  ]
+}
