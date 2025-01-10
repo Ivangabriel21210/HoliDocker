@@ -1,7 +1,7 @@
 {
   "Version": "0.7",
   "ReleaseNotes": "🇨🇦VPS DOMINICANA🇺🇸",
-  "UrlUpdate": "",
+  "UrlUpdate": "https://raw.githubusercontent.com/Ivangabriel21210/HoliDocker/main/config.json",
   "Sms": "",
   "EmailFeedback": "",
   "UrlContato": "",
@@ -15,8 +15,8 @@
   "Servers": [
    {
       "Name": "🇺🇸IvanJVM RD🇺🇸",
-      "TYPE": "premium",
-      "FLAG": "um.png",
+      "TYPE": "free",
+      "FLAG": "us.png",
       "ServerIP": "vpn.holisprite.es",
       "CheckUser": "",
       "ServerPort": "80",
@@ -26,7 +26,7 @@
     },
    {
       "Name": "🇨🇦Whatsapp RD🇨🇦",
-      "TYPE": "premium",
+      "TYPE": "free",
       "FLAG": "um.png",
       "ServerIP": "vpn.holisprite.es",
       "CheckUser": "",
@@ -39,13 +39,13 @@
   "Networks": [
    {
       "Name": "🇨🇦_🇺🇸 - VPS- 🇺🇸_🇨🇦",
-      "FLAG": "ic_vivo",
+      "FLAG": "CLARO",
       "Payload": "GET / HTTP/1.1[crlf]Host: [lf]Connection: Upgrade[lf]User-Agent: [lf]Upgrade: websocket[lf][lf]",
       "SNI": "",
       "TlsIP": "",
-      "ProxyIP": "[app_host]",
+      "ProxyIP": "kelvin.conexioan.com",
       "ProxyPort": "80",
-      "Info": "Direct"
+      "Info": "Proxy"
     }
   ]
 }
