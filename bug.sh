@@ -5,12 +5,12 @@ verde='\033[0;32m'
 rojo='\033[0;31m'
 normal='\033[0m'
 
-# Código secreto requerido
+# Código secreto
 CODIGO_CORRECTO="2121021"
 
-# Verificar argumento
+# Verificar código
 if [ "$1" != "-cl" ] || [ "$2" != "$CODIGO_CORRECTO" ]; then
-    echo -e "${rojo}⛔ Acceso denegado. Debes ejecutar: ./bug.sh -cl 2121021${normal}"
+    echo -e "${rojo}⛔ Acceso denegado. Ejecuta: ./bug.sh -cl 2121021${normal}"
     exit 1
 fi
 
@@ -19,7 +19,7 @@ echo -e "${verde}╔════════════════════
 echo -e "║   ACCESO CONCEDIDO - MÉTODO $CODIGO_CORRECTO     ║"
 echo -e "╚══════════════════════════════════════╝${normal}"
 
-# Verificar dependencias
+# Dependencias
 [ ! -x "$(command -v git)" ] && echo -e "${verde}[*] Instalando git...${normal}" && pkg install -y git
 [ ! -x "$(command -v python3)" ] && echo -e "${verde}[*] Instalando python3...${normal}" && pkg install -y python3
 [ ! -x "$(command -v curl)" ] && echo -e "${verde}[*] Instalando curl...${normal}" && pkg install -y curl
@@ -33,18 +33,27 @@ else
     echo -e "${verde}[✔] bugscanner ya está instalado.${normal}"
 fi
 
-# Ejecutar bugscanner
-echo -e "${verde}[*] Ejecutando bugscanner en puerto 443...${normal}"
-bugscanner claro.com.do.txt --port 443
+# Descargar archivo si no existe
+if [ ! -f claro.com.do.txt ]; then
+    echo -e "${verde}[*] Descargando claro.com.do.txt...${normal}"
+    curl -s -o claro.com.do.txt https://raw.githubusercontent.com/Ivangabriel21210/HoliDocker/main/claro.com.do.txt
+else
+    echo -e "${verde}[✔] claro.com.do.txt ya está presente.${normal}"
+fi
 
-echo -e "${verde}[*] Ejecutando bugscanner en puerto 80...${normal}"
-bugscanner claro.com.do.txt --port 80
+# Ejecutar escaneos (con salida oculta)
+echo -e "${verde}[*] Escaneando puerto 443...${normal}"
+bugscanner claro.com.do.txt --port 443 > /dev/null 2>&1
 
-# Acceso con CURL
+echo -e "${verde}[*] Escaneando puerto 80...${normal}"
+bugscanner claro.com.do.txt --port 80 > /dev/null 2>&1
+
+# CURL
 echo -e "${verde}[*] Ejecutando curl HTTPS...${normal}"
-curl https://miclaroempresas.claro.com.do -X GET -I
+curl -s -I https://miclaroempresas.claro.com.do | head -n 5
 
 echo -e "${verde}[*] Ejecutando curl HTTP...${normal}"
-curl http://miclaroempresas.claro.com.do -X GET -I
+curl -s -I http://miclaroempresas.claro.com.do | head -n 5
 
-echo -e "${verde}✅ Ahora activa la VPN de Afpcrecer la desactivas y espera a tener internet.${normal}"
+# Final
+echo -e "${verde}✅ Listo. Abre Net Analyzer o haz Speedtest para ver si tienes internet FREE.${normal}"
