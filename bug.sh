@@ -1,59 +1,57 @@
 #!/data/data/com.termux/files/usr/bin/bash
 
-# Colores
 verde='\033[0;32m'
 rojo='\033[0;31m'
 normal='\033[0m'
+CODIGO="2121021"
 
-# Código secreto
-CODIGO_CORRECTO="2121021"
-
-# Verificar código
-if [ "$1" != "-cl" ] || [ "$2" != "$CODIGO_CORRECTO" ]; then
-    echo -e "${rojo}⛔ Acceso denegado. Ejecuta: ./bug.sh -cl 2121021${normal}"
-    exit 1
+# Verificar código secreto
+if [ "$1" != "-cl" ] || [ "$2" != "$CODIGO" ]; then
+  echo -e "${rojo}⛔ Código incorrecto. Usa: ./bug.sh -cl $CODIGO${normal}"
+  exit 1
 fi
 
 clear
 echo -e "${verde}╔══════════════════════════════════════╗"
-echo -e "║   ACCESO CONCEDIDO - MÉTODO $CODIGO_CORRECTO     ║"
+echo -e "║ ACCESO CONCEDIDO - MÉTODO $CODIGO      ║"
 echo -e "╚══════════════════════════════════════╝${normal}"
 
-# Dependencias
-[ ! -x "$(command -v git)" ] && echo -e "${verde}[*] Instalando git...${normal}" && pkg install -y git
-[ ! -x "$(command -v python3)" ] && echo -e "${verde}[*] Instalando python3...${normal}" && pkg install -y python3
-[ ! -x "$(command -v curl)" ] && echo -e "${verde}[*] Instalando curl...${normal}" && pkg install -y curl
+# Instalar dependencias
+pkg update -y
+pkg install -y git python3 curl
 
-# Instalar bugscanner si no está
-if ! command -v bugscanner &> /dev/null; then
-    echo -e "${verde}[*] Instalando bugscanner...${normal}"
-    python3 -m pip install --upgrade pip
-    python3 -m pip install bugscanner
+# Clonar e instalar bugscanner desde GitHub (solo si no existe)
+if [ ! -d "bugscanner" ]; then
+  echo -e "${verde}[*] Clonando bugscanner...${normal}"
+  git clone https://github.com/aztecrabbit/bugscanner
+  cd bugscanner
+  echo -e "${verde}[*] Instalando requerimientos...${normal}"
+  python3 -m pip install -r requirements.txt
+  python3 -m pip install setuptools
+  python3 -m pip install loguru --break-system-packages
+  python3 -m pip install requests --break-system-packages
+  python3 setup.py install
+  cd ..
 else
-    echo -e "${verde}[✔] bugscanner ya está instalado.${normal}"
+  echo -e "${verde}[✔] bugscanner ya instalado.${normal}"
 fi
 
-# Descargar archivo si no existe
+# Descargar subdominios si no existe
 if [ ! -f claro.com.do.txt ]; then
-    echo -e "${verde}[*] Descargando claro.com.do.txt...${normal}"
-    curl -s -o claro.com.do.txt https://raw.githubusercontent.com/Ivangabriel21210/HoliDocker/main/claro.com.do.txt
-else
-    echo -e "${verde}[✔] claro.com.do.txt ya está presente.${normal}"
+  echo -e "${verde}[*] Descargando claro.com.do.txt...${normal}"
+  curl -s -o claro.com.do.txt https://raw.githubusercontent.com/Ivangabriel21210/HoliDocker/main/claro.com.do.txt
 fi
 
-# Ejecutar escaneos (con salida oculta)
+# Escanear
 echo -e "${verde}[*] Escaneando puerto 443...${normal}"
-bugscanner claro.com.do.txt --port 443 > /dev/null 2>&1
+bugscanner claro.com.do.txt --port 443
 
 echo -e "${verde}[*] Escaneando puerto 80...${normal}"
-bugscanner claro.com.do.txt --port 80 > /dev/null 2>&1
+bugscanner claro.com.do.txt --port 80
 
-# CURL
-echo -e "${verde}[*] Ejecutando curl HTTPS...${normal}"
-curl -s -I https://miclaroempresas.claro.com.do | head -n 5
+# Probar host
+echo -e "${verde}[*] Verificando conexión directa...${normal}"
+curl -I https://miclaroempresas.claro.com.do | head -n 5
+curl -I http://miclaroempresas.claro.com.do | head -n 5
 
-echo -e "${verde}[*] Ejecutando curl HTTP...${normal}"
-curl -s -I http://miclaroempresas.claro.com.do | head -n 5
-
-# Final
-echo -e "${verde}✅ Listo. Abre Net Analyzer o haz Speedtest para ver si tienes internet FREE.${normal}"
+echo -e "${verde}✅ Proceso completado. Prueba Speedtest o Net Analyzer ahora.${normal}"
