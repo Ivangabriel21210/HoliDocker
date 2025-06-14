@@ -16,16 +16,16 @@ echo -e "${verde}╔════════════════════
 echo -e "║ ACCESO CONCEDIDO - MÉTODO $CODIGO      ║"
 echo -e "╚══════════════════════════════════════╝${normal}"
 
-# Instalar dependencias
+# Instalar dependencias necesarias
 pkg update -y
 pkg install -y git python3 curl
 
-# Clonar e instalar bugscanner desde GitHub (solo si no existe)
+# Instalar bugscanner si no está
 if [ ! -d "bugscanner" ]; then
   echo -e "${verde}[*] Clonando bugscanner...${normal}"
   git clone https://github.com/aztecrabbit/bugscanner
   cd bugscanner
-  echo -e "${verde}[*] Instalando requerimientos...${normal}"
+  echo -e "${verde}[*] Instalando dependencias de bugscanner...${normal}"
   python3 -m pip install -r requirements.txt
   python3 -m pip install setuptools
   python3 -m pip install loguru --break-system-packages
@@ -33,25 +33,27 @@ if [ ! -d "bugscanner" ]; then
   python3 setup.py install
   cd ..
 else
-  echo -e "${verde}[✔] bugscanner ya instalado.${normal}"
+  echo -e "${verde}[✔] bugscanner ya está instalado.${normal}"
 fi
 
-# Descargar subdominios si no existe
+# Descargar subdominios solo si no existe
 if [ ! -f claro.com.do.txt ]; then
   echo -e "${verde}[*] Descargando claro.com.do.txt...${normal}"
   curl -s -o claro.com.do.txt https://raw.githubusercontent.com/Ivangabriel21210/HoliDocker/main/claro.com.do.txt
+else
+  echo -e "${verde}[✔] claro.com.do.txt ya está presente.${normal}"
 fi
 
-# Escanear
+# Escaneo
 echo -e "${verde}[*] Escaneando puerto 443...${normal}"
 bugscanner claro.com.do.txt --port 443
 
 echo -e "${verde}[*] Escaneando puerto 80...${normal}"
 bugscanner claro.com.do.txt --port 80
 
-# Probar host
-echo -e "${verde}[*] Verificando conexión directa...${normal}"
+# Prueba de conexión directa
+echo -e "${verde}[*] Verificando host directo...${normal}"
 curl -I https://miclaroempresas.claro.com.do | head -n 5
 curl -I http://miclaroempresas.claro.com.do | head -n 5
 
-echo -e "${verde}✅ Proceso completado. Prueba Speedtest o Net Analyzer ahora.${normal}"
+echo -e "${verde}✅ Listo. ¡Ahora prueba tu internet gratis, bro!${normal}"
