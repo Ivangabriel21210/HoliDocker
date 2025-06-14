@@ -16,9 +16,20 @@ echo -e "${verde}╔════════════════════
 echo -e "║ ACCESO CONCEDIDO - MÉTODO $CODIGO      ║"
 echo -e "╚══════════════════════════════════════╝${normal}"
 
-# Instalar dependencias necesarias
-pkg update -y
-pkg install -y git python3 curl
+# Función para verificar e instalar paquetes
+verificar_pkg() {
+  if ! command -v "$1" >/dev/null 2>&1; then
+    echo -e "${verde}[*] Instalando $1...${normal}"
+    pkg install -y "$1"
+  else
+    echo -e "${verde}[✔] $1 ya está instalado.${normal}"
+  fi
+}
+
+# Verificar dependencias
+verificar_pkg git
+verificar_pkg python
+verificar_pkg curl
 
 # Instalar bugscanner si no está
 if [ ! -d "bugscanner" ]; then
