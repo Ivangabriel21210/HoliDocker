@@ -1,12 +1,12 @@
 [
   {
-    "host": "157.173.201.36",
+    "host": "135.148.115.146",
     "image": "us.png",
-    "name": "BladeX VPS | Claro TCP"
+    "name": "BladeXNET | ClaroDNS"
   },
   {
-    "host": "5.161.189.163",
+    "host": "135.148.115.146",
     "image": "us.png",
-    "name": "Ashburn"
+    "name": "BladeXNET | AlticeDNS"
   }
 ]
